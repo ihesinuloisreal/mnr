@@ -7,7 +7,6 @@ import Header from "./Header";
 const ContestList = ({initialContest, onContestClick}) => {
     const [contests, setContests] = useState(initialContest ?? []);
     
-    
     useEffect(() => {
         if (!initialContest) {
             fetchContests().then((contests) => {
