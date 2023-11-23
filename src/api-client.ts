@@ -34,6 +34,7 @@ export const addNewContest = async ({
             contestDescription
         },
     );
+    
 
     return resp.data.updatedContest
 };

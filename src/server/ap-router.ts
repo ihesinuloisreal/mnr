@@ -65,12 +65,17 @@ router.post("/contests/", async (req, res) => {
         .insertOne(
         {
             id: contestName.toLowerCase().replace(/\s/g, "-"),
-            contestName,
-            contestCategory,
-            contestDescription,
+            contestName:contestName,
+            categoryName:contestCategory,
+            description:contestDescription,
             names: [],
         }
     );
+    console.log(
+    contestName,
+    contestCategory,
+    contestDescription,)
+    
     const contest = await client
     .collection("contests")
     .findOne({_id: newContest.insertedId})
