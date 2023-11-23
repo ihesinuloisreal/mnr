@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react"
-import { fetchSingleContests } from "../api-client";
+import { addNewNameToContest, fetchSingleContests } from "../api-client";
 import Header from "./Header";
 
 
@@ -19,6 +19,16 @@ const Contest = ({initialContest, navigatecontest}) => {
         event.preventDefault();
         navigatecontest();
     }
+
+    const handleNewNameSubmit = async (event) => {
+        event.preventDefault();
+        const newNameInput = event.target.newName;
+        const updatedContest = await addNewNameToContest({
+            contestId: contest.id, 
+            newNameValue: newNameInput.value
+        });
+        setContests(updatedContest);
+    }
     
     return (
         <>
@@ -37,6 +47,14 @@ const Contest = ({initialContest, navigatecontest}) => {
                         ) 
                         : (<div>No names proposed yet</div>)}
                 </div>
+                <div className="title">Proposed a new Name</div>
+                    <div className="body">
+                        <form onSubmit={handleNewNameSubmit}>
+                            <input type="text" name="newName" placeholder="New Name Here..." />
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                
                 <a href="/" className="link" onClick={HandleClick}>Contest Link</a>
             </div>
         </>

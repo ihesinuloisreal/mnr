@@ -11,3 +11,29 @@ export const fetchSingleContests = async (contestId) => {
 
     return resp.data.contest
 };
+export const addNewNameToContest = async ({
+    contestId, 
+    newNameValue,
+}) => {
+    const resp = await axios.post(
+        `${API_SERVER_URL}/contest/${contestId}`,
+        { newNameValue },
+    );
+
+    return resp.data.updatedContest
+};
+export const addNewContest = async ({
+    contestName,
+    contestCategory,
+    contestDescription
+}) => {
+    const resp = await axios.post(
+        `${API_SERVER_URL}/contests/`,
+        {   contestName,
+            contestCategory,
+            contestDescription
+        },
+    );
+
+    return resp.data.updatedContest
+};

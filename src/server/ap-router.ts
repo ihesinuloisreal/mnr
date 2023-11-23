@@ -6,6 +6,7 @@ import { connectClient } from "./db";
 const router = express.Router();
 
 router.use(cors());
+router.use(express.json())
 router.get("/contests", async (req, res) => {
     const client = await connectClient();
 
@@ -29,5 +30,52 @@ router.get("/contest/:contestId", async (req, res) => {
 
     res.send({contest})
 })
+
+router.post("/contest/:contestId", async (req, res) => {
+    const client = await connectClient();
+    const { newNameValue } = req.body;
+    const doc = await client
+    .collection("contests")
+    .findOneAndUpdate(
+        {id: req.params.contestId},
+        {
+            $push: {
+                names: {
+                    id: newNameValue.toLowerCase().replace(/\s/g, "-"),
+                    name: newNameValue,
+                    timestamp: new Date(),
+                },
+            },
+        },
+        {
+            returnDocument: "after"
+        },
+    )
+
+    res.send({updatedContest: doc.value})
+})
+
+
+
+router.post("/contests/", async (req, res) => {
+    const client = await connectClient();
+    const {contestName,contestCategory,contestDescription} = req.body;
+    const newContest = await client
+        .collection("contests")
+        .insertOne(
+        {
+            id: contestName.toLowerCase().replace(/\s/g, "-"),
+            contestName,
+            contestCategory,
+            contestDescription,
+            names: [],
+        }
+    );
+    const contest = await client
+    .collection("contests")
+    .findOne({_id: newContest.insertedId})
+
+    res.send({contest})
+});
 
 export default router

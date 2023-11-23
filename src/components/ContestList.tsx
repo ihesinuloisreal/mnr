@@ -25,6 +25,7 @@ const ContestList = ({initialContest, onContestClick}) => {
                     return <ContestPreview key={contest.id} contest={contest} onClick = {onContestClick}/>
                 })}
             </div>
+            
         </>
     )
 }
