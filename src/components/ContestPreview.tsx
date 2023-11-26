@@ -1,16 +1,23 @@
 import * as React from "react"
+import {useState} from "react"
 const ContestPreview: React.FC< { contest: object}> = ({contest, onClick, deleteContest}) => {
-    
+    const [contests, setcontests] = useState(contest)
     
     const handleClick = (event) => {
         event.preventDefault();
         
-        onClick(contest.id);
+        onClick(contests.id);
     } 
     const handleDelete = (event) => {
         event.preventDefault();
-        deleteContest(contest.id)
+        deleteContest(contests.id);
+        const newList = Object.values(contests).filter((item)=>{
+            return item !== contests.id
+        })
+        setcontests(newList);
+        // console.log(newList);
         
+
     }
     
     
@@ -18,8 +25,8 @@ const ContestPreview: React.FC< { contest: object}> = ({contest, onClick, delete
     <>
     
         <div className="contest-preview" onClick={handleClick}>
-            <div className="category">{contest.categoryName}</div>
-            <div className="contest">{ contest.contestName }</div>
+            <div className="category">{contests.categoryName}</div>
+            <div className="contest">{ contests.contestName }</div>
         </div>
             <button onClick={handleDelete}>Delete</button>
             </>

@@ -31,8 +31,7 @@ const App = ({initialData}) => {
     }
     const deleteContest = (contestId) => {
         deleteSingleContests(contestId);
-        // console.log(contestId);
-        
+                        
     }
 
     const pageContent = () => {
