@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.use(cors());
 router.use(express.json())
+
+// Fetching Route
 router.get("/contests", async (req, res) => {
     const client = await connectClient();
 
@@ -22,6 +24,7 @@ router.get("/contests", async (req, res) => {
     res.send({contests});
 })
 
+// Updating Route
 router.get("/contest/:contestId", async (req, res) => {
     const client = await connectClient();
     const contest = await client
@@ -31,6 +34,17 @@ router.get("/contest/:contestId", async (req, res) => {
     res.send({contest})
 })
 
+// Delete Route
+router.delete("/delete/:contestId", async (req, res) => {
+    const client = await connectClient();
+    const deleted = await client
+    .collection("contests")
+    .deleteOne({id: req.params.contestId})
+    console.log("Recored deleted");
+    res.send({deleted})
+})
+
+// Posting Route
 router.post("/contest/:contestId", async (req, res) => {
     const client = await connectClient();
     const { newNameValue } = req.body;
@@ -56,7 +70,7 @@ router.post("/contest/:contestId", async (req, res) => {
 })
 
 
-
+// Creating New contest Route
 router.post("/contests/", async (req, res) => {
     const client = await connectClient();
     const {contestName,contestCategory,contestDescription} = req.body;

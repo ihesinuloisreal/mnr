@@ -4,7 +4,7 @@ import {useEffect, useState} from "react"
 import { fetchContests } from "../api-client";
 import Header from "./Header";
 
-const ContestList = ({initialContest, onContestClick}) => {
+const ContestList = ({initialContest, onContestClick, deleteContest}) => {
     const [contests, setContests] = useState(initialContest ?? []);
     
     useEffect(() => {
@@ -22,7 +22,7 @@ const ContestList = ({initialContest, onContestClick}) => {
 
             <div className="contest-list link">
                 {contests.map((contest)=>{
-                    return <ContestPreview key={contest.id} contest={contest} onClick = {onContestClick}/>
+                    return <ContestPreview key={contest.id} contest={contest} deleteContest={deleteContest} onClick = {onContestClick}/>
                 })}
             </div>
             

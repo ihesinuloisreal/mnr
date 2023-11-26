@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import ContestList from "./ContestList";
 import Contest from "./Contest";
-import { addNewContest } from "../api-client";
+import { addNewContest, deleteSingleContests } from "../api-client";
 
 const App = ({initialData}) => {
     // console.log(initialData);
@@ -29,13 +29,18 @@ const App = ({initialData}) => {
         setPage("contestList");
         setcurrentContest(undefined);
     }
+    const deleteContest = (contestId) => {
+        deleteSingleContests(contestId);
+        // console.log(contestId);
+        
+    }
 
     const pageContent = () => {
         switch (page) {
             case "contestList":
                 return(
                     <>
-                    <ContestList initialContest={initialData.contests} onContestClick= {navigateToContest}/>;
+                    <ContestList initialContest={initialData.contests} onContestClick= {navigateToContest} deleteContest= {deleteContest}/>;
 
                         {
                 visibility ? (
